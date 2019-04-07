@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.routz.dockerdemo</groupId>
+    <artifactId>firstdocker</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>firstdocker</name>
+    <description>Demo project for Spring Boot + docker</description>
+
+    <properties>
+        <!-- 自己的dockerhub账号名 -->
+        <docker.image.prefix>ieatpotato</docker.image.prefix>
+        <java.version>12</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- docker plugin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.9</version>
+                <configuration>
+                    <!-- image的tag名称 -->
+                    <tag>${project.version}</tag>
+                    <!-- 增加Dockerfile里使用的参数 -->
+                    <buildArgs>
+                        <!-- 创建一个名字叫JAR_FILE的参数 值是用mvn打包生成的fat jar的相对路径-->
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                    <!-- 这个项目的镜像仓库名称 -->
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <!-- 确保docker image创建之前不打包 -->
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--fork:  如果没有该项配置，devtools不会起作用，即应用不会restart -->
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--阿里云maven服务器-->
+    <repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>nexus-aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>

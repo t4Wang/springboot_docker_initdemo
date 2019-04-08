@@ -16,7 +16,7 @@
 
     <properties>
         <!-- 自己的dockerhub账号名 -->
-        <docker.image.prefix>ieatpotato</docker.image.prefix>
+        <docker.image.prefix>registry.cn-hangzhou.aliyuncs.com/ieatpotato</docker.image.prefix>
         <java.version>12</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -49,6 +49,18 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.9</version>
+
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
                 <configuration>
                     <!-- image的tag名称 -->
                     <tag>${project.version}</tag>
@@ -59,6 +71,7 @@
                     </buildArgs>
                     <!-- 这个项目的镜像仓库名称 -->
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <!--<re-->
                 </configuration>
             </plugin>
 

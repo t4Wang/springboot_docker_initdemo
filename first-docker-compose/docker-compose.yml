@@ -1,0 +1,31 @@
+version:"3"
+services:
+  db:
+     image: mysql
+     command: --default-authentication-plugin=mysql_native_password
+     environment:
+      MYSQL_DATABASE: travel
+      MYSQL_ROOT_PASSWORD: jWZ,k6*MQTtt
+      MYSQL_USER: traveler
+      MYSQL_PASSWORD: ALKdks348,.
+#      MYSQL_ROOT_HOST: '%'
+     ports:
+     - "3416:3306"
+     restart: always
+  web:
+    # 将 username/repo:tag 替换为您的名称和镜像详细信息
+    image: registry.cn-hangzhou.aliyuncs.com/ieatpotato/first-docker-compose:0.0.1-SNAPSHOT
+    deploy:
+      replicas:5
+      resources:
+        limits:
+          cpus:"0.1"
+          memory:50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "80:8080"
+    networks:
+      - webnet
+networks:
+  webnet:

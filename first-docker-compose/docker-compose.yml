@@ -1,4 +1,4 @@
-version:"3"
+version: "3"
 services:
   db:
      image: mysql
@@ -8,7 +8,10 @@ services:
       MYSQL_ROOT_PASSWORD: jWZ,k6*MQTtt
       MYSQL_USER: traveler
       MYSQL_PASSWORD: ALKdks348,.
-#      MYSQL_ROOT_HOST: '%'
+     volumes:
+        - "./mysql/db:/var/lib/mysql"
+        - "./mysql/conf/my.cnf:/etc/my.cnf"
+        - "./mysql/init:/docker-entrypoint-initdb.d/"
      ports:
      - "3416:3306"
      restart: always
@@ -16,11 +19,11 @@ services:
     # 将 username/repo:tag 替换为您的名称和镜像详细信息
     image: registry.cn-hangzhou.aliyuncs.com/ieatpotato/first-docker-compose:0.0.1-SNAPSHOT
     deploy:
-      replicas:5
+      replicas: 5
       resources:
         limits:
-          cpus:"0.1"
-          memory:50M
+          cpus: "0.1"
+          memory: 50M
       restart_policy:
         condition: on-failure
     ports:

@@ -11,7 +11,7 @@ services:
      volumes:
         - "./mysql/db:/var/lib/mysql"
         - "./mysql/conf/my.cnf:/etc/my.cnf"
-        - "./mysql/log/error.log:/var/log/error.log"
+        - "./mysql/log/:/var/log/mysqld.log"
         - "./mysql/mysqld:/var/run/mysqld/"
         - "./mysql/init:/docker-entrypoint-initdb.d/"
      ports:

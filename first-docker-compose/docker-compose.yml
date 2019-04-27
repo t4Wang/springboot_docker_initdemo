@@ -4,9 +4,9 @@ services:
      image: mysql
      command: --default-authentication-plugin=mysql_native_password
      environment:
-      MYSQL_DATABASE: travel
+      MYSQL_DATABASE: blog
       MYSQL_ROOT_PASSWORD: jWZ,k6*MQTtt
-      MYSQL_USER: traveler
+      MYSQL_USER: bloger
       MYSQL_PASSWORD: ALKdks348,.
      volumes:
         - "mysql_log:/var/log/mysqld.log"

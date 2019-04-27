@@ -33,7 +33,7 @@ services:
       - webnet
 networks:
   webnet:
-volumns:
+volumes:
   mysql_log:
   mysql_data:
 

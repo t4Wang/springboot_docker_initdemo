@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   db:
      image: mysql
@@ -10,7 +10,7 @@ services:
       MYSQL_PASSWORD: ALKdks348,.
      volumes:
         - "mysql_log:/var/log/mysqld.log"
-        - "data:/var/lib/mysql"
+        - "mysql_data:/var/lib/mysql"
         - "./mysql/conf/my.cnf:/etc/my.cnf"
         - "./mysql/init:/docker-entrypoint-initdb.d/"
      ports:
@@ -33,3 +33,7 @@ services:
       - webnet
 networks:
   webnet:
+volumns:
+  mysql_log:
+  mysql_data:
+

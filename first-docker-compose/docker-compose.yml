@@ -9,8 +9,8 @@ services:
       MYSQL_USER: bloger
       MYSQL_PASSWORD: ALKdks348,.
      volumes:
-        - "mysql_log:/var/log/mysqld.log"
-        - "mysql_data:/var/lib/mysql"
+        - "./mysql/log:/var/log/mysqld.log"
+        - "./mysql/data:/var/lib/mysql"
         - "./mysql/conf/my.cnf:/etc/my.cnf"
         - "./mysql/init:/docker-entrypoint-initdb.d/"
      ports:
@@ -33,7 +33,4 @@ services:
       - webnet
 networks:
   webnet:
-volumes:
-  mysql_log:
-  mysql_data:
 

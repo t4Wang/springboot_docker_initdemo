@@ -2,16 +2,16 @@ version: "3.7"
 services:
   db:
      image: mysql
-    #  command: --default-authentication-plugin=mysql_native_password
+     command: --default-authentication-plugin=mysql_native_password
      environment:
       MYSQL_DATABASE: blog
       MYSQL_ROOT_PASSWORD: jWZ,k6*MQTtt
       MYSQL_USER: bloger
       MYSQL_PASSWORD: ALKdks348,.
      volumes:
-    #     - "mysql_log:/var/log/mysqld.log"
-    #     - "mysql_data:/var/lib/mysql"
-        # - "./mysql/conf/my.cnf:/etc/my.cnf"
+        - "mysql_log:/var/log/mysqld.log"
+        - "mysql_data:/var/lib/mysql"
+        - "./mysql/conf/my.cnf:/etc/my.cnf"
         - "./mysql/init:/docker-entrypoint-initdb.d/"
      ports:
      - "3471:3306"
@@ -33,7 +33,7 @@ services:
       - webnet
 networks:
   webnet:
-# volumes:
-#   mysql_log:
-#   mysql_data:
+volumes:
+  mysql_log:
+  mysql_data:
 

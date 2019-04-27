@@ -1,7 +1,6 @@
 -- 添加新用户
-CREATE USER 'bloger'@'%' IDENTIFIED BY 'ALKdks348,.';
-create database blog;
-
+-- CREATE USER 'bloger'@'%' IDENTIFIED BY 'ALKdks348,.';
+-- create database blog;
 use mysql;
 grant all privileges on blog.* to bloger@'%';
 -- alter user 'traveler'@'%' identified with mysql_native_password by 'ALKdks348,.';
